@@ -10,12 +10,15 @@
                 "https://docsend.com/view/*"
             ],
             "js": [
+                "jspdf.umd.min.js",
                 "content.js"
             ]
         }
     ],
     "background": {
-        "page": "background.html"
+        "scripts": [
+            "background.js"
+        ]
     },
     "permissions": [
         "https://*.cloudfront.net/docs*",

@@ -1,28 +1,30 @@
-browser.runtime.onMessage.addListener(async (msg) => {
-    const imgs = new Array();
-    for (const url of msg) {
-        var img = new Image()
-        img.loaded = new Promise(resolve => {
-            img.onload = resolve;
-        })
-        img.src = url;
-        imgs.push(img);
+const dataURItoBlob = (dataURI, sliceSize = 512) => {
+    // dataURItoBlob
+    // https://stackoverflow.com/a/5100158/5133167
+    // b64toBlob
+    // https://stackoverflow.com/a/16245768/5133167
+
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+    const byteCharacters = atob(dataURI.split(',')[1]);
+
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        const slice = byteCharacters.slice(offset, offset + sliceSize);
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
     }
-    var doc = new jspdf.jsPDF({
-        orientation: 'l',
-        unit: 'px',
-        format: 'a4',
-        compress: true
+    return new Blob(byteArrays, {
+        type: mimeString
     });
-    doc = doc.deletePage(1);
-    for (const img of imgs) {
-        await img.loaded;
-        doc.addPage([img.width, img.height], 'l');
-        doc.addImage(img, 'JPEG', 0, 0, img.width, img.height, '', 'FAST');
-    }
-    const blobUrl = URL.createObjectURL(doc.output('blob'));
+}
+
+browser.runtime.onMessage.addListener(msg => {
     browser.downloads.download({
-        url: blobUrl,
+        url: URL.createObjectURL(dataURItoBlob(msg.dataURL)),
         filename: "docsend.pdf"
     })
 })
