@@ -1,0 +1,25 @@
+{
+    "manifest_version": 2,
+    "name": "docsend-dl",
+    "version": "1.0",
+    "description": "Add a download button on Docsend documents",
+    "icons": {},
+    "content_scripts": [
+        {
+            "matches": [
+                "https://docsend.com/view/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "background": {
+        "page": "background.html"
+    },
+    "permissions": [
+        "https://*.cloudfront.net/docs*",
+        "https://docsend-prod.s3.amazonaws.com/docs/*",
+        "downloads"
+    ]
+}
