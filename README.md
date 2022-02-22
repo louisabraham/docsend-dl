@@ -2,6 +2,8 @@
 
 This add-on adds a download button on Docsend documents.
 
+![banner](banner.png)
+
 ## How it works
 
 1. A "Download" button is injected on the page.
