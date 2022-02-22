@@ -85,15 +85,13 @@ const download = async () => {
             "dataURL": reader.result
         });
     }
-
-
 }
 
 const url = new URL(document.location.href);
 if (url.hash == "#download") {
     download().then(() => {
-        // url.hash = "";
-        // document.location.href = url.href;
+        url.hash = "";
+        document.location.href = url.href;
     })
 } else
     addButton(() => {
