@@ -2,6 +2,8 @@
 
 This add-on adds a download button on Docsend documents.
 
+Get this extension on [Firefox](https://addons.mozilla.org/en-US/firefox/addon/docsend-dl/).
+
 ![banner](banner.png)
 
 ## How it works
